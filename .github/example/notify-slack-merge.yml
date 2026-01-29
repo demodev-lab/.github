@@ -29,7 +29,7 @@ on:
     types: [closed]
 
 jobs:
-  notify:
+  slack-merge-notification:
     if: github.event.pull_request.merged == true
     uses: demodev-lab/.github/.github/workflows/notify-slack-merge.yml@main
     secrets:

@@ -14,8 +14,8 @@ on:
         required: true
 
 jobs:
-  notify:
-    runs-on: ubuntu-latest
+  demodev-lab:
+    runs-on: self-hosted
     steps:
       - name: Send Slack Notification - Success
         if: inputs.status == 'success'
@@ -46,7 +46,7 @@ jobs:
                     },
                     {
                       "type": "mrkdwn",
-                      "text": "*커밋:*\n${{ github.event.head_commit.message }}"
+                      "text": "*커밋:*\n`${{ github.sha }}`"
                     },
                     {
                       "type": "mrkdwn",
@@ -90,7 +90,7 @@ jobs:
                     },
                     {
                       "type": "mrkdwn",
-                      "text": "*커밋:*\n${{ github.event.head_commit.message }}"
+                      "text": "*커밋:*\n`${{ github.sha }}`"
                     },
                     {
                       "type": "mrkdwn",

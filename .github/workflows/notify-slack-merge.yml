@@ -9,11 +9,12 @@ on:
         required: true
 
 jobs:
-  notify-merge:
+  demodev-lab:
     runs-on: self-hosted
 
     steps:
       - name: Send Slack Notification
+        continue-on-error: true
         uses: slackapi/slack-github-action@v2.1.1
         with:
           method: chat.postMessage

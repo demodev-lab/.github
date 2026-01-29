@@ -101,7 +101,7 @@ on:
     types: [opened, reopened, ready_for_review]
 
 jobs:
-  notify:
+  slack-pr-open-notification:
     if: github.event.pull_request.draft == false
     uses: demodev-lab/.github/.github/workflows/notify-slack-pr-open.yml@main
     secrets:
@@ -146,7 +146,7 @@ on:
     types: [closed]
 
 jobs:
-  notify:
+  slack-merge-notification:
     if: github.event.pull_request.merged == true
     uses: demodev-lab/.github/.github/workflows/notify-slack-merge.yml@main
     secrets:
