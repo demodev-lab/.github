@@ -1,0 +1,63 @@
+name: Slack PR Notification
+
+on:
+  workflow_call:
+    secrets:
+      SLACK_BOT_TOKEN:
+        required: true
+      SLACK_CHANNEL_ID:
+        required: true
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send Slack Notification - PR Opened
+        continue-on-error: true
+        uses: slackapi/slack-github-action@v2.1.1
+        with:
+          method: chat.postMessage
+          token: ${{ secrets.SLACK_BOT_TOKEN }}
+          payload: |
+            {
+              "channel": "${{ secrets.SLACK_CHANNEL_ID }}",
+              "text": "새로운 PR이 배달되었습니다!",
+              "blocks": [
+                {
+                  "type": "header",
+                  "text": {
+                    "type": "plain_text",
+                    "text": "🎁 띵동! 선물이 배달되었어요",
+                    "emoji": true
+                  }
+                },
+                {
+                  "type": "section",
+                  "fields": [
+                    {
+                      "type": "mrkdwn",
+                      "text": "*레포지토리:*\n`${{ github.repository }}`"
+                    },
+                    {
+                      "type": "mrkdwn",
+                      "text": "*제목:*\n${{ github.event.pull_request.title }}"
+                    },
+                    {
+                      "type": "mrkdwn",
+                      "text": "*브랜치:*\n`${{ github.event.pull_request.head.ref }}` → `${{ github.event.pull_request.base.ref }}`"
+                    },
+                    {
+                      "type": "mrkdwn",
+                      "text": "*작성자:*\n${{ github.event.pull_request.user.login }}"
+                    }
+                  ]
+                },
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": "*PR 보기:* <${{ github.event.pull_request.html_url }}|#${{ github.event.pull_request.number }}>"
+                  }
+                }
+              ]
+            }

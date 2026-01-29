@@ -1,0 +1,37 @@
+# ============================================================================
+#                         📝 PR 생성 알림 설정 가이드
+# ============================================================================
+#
+# 🎯 목적: 새로운 PR이 생성되면 Slack 채널에 자동으로 알림을 보냅니다.
+#
+# ⚠️  주의사항 (반드시 확인하세요!)
+# ────────────────────────────────────────────────────────────────────────────
+# 1. 이 파일을 .github/workflows/ 폴더에 복사하세요.
+#
+# 2. 필수 Secrets 설정 (Repository Settings > Secrets and variables > Actions):
+#    - SLACK_BOT_TOKEN: Slack Bot의 OAuth Token (xoxb-로 시작)
+#    - SLACK_CHANNEL_ID: 알림을 받을 Slack 채널 ID (C로 시작하는 11자리)
+#
+# 3. 워크플로우 경로: 아래 두 가지 방식 중 선택
+#    - 중앙 레포 사용: demodev-lab/.github/.github/workflows/notify-slack-pr-open.yml@main
+#    - 로컬 사용: ./.github/workflows/notify-slack-pr-open.yml (파일 복사 필요)
+#
+# 4. 트리거 조건 (types):
+#    - opened: PR 생성 시 (기본값)
+#    - reopened: PR 재오픈 시
+#    - ready_for_review: Draft에서 Ready로 변경 시
+#
+# ============================================================================
+
+name: PR Notification
+
+on:
+  pull_request:
+    types: [opened]
+
+jobs:
+  notify:
+    uses: demodev-lab/.github/.github/workflows/notify-slack-pr-open.yml@main
+    secrets:
+      SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+      SLACK_CHANNEL_ID: ${{ secrets.SLACK_CHANNEL_ID }}

@@ -1,0 +1,74 @@
+# ============================================================================
+#                         📢 배포 알림 설정 가이드
+# ============================================================================
+#
+# 🎯 목적: 배포 성공/실패 시 Slack 채널에 자동으로 알림을 보냅니다.
+#
+# ⚠️  주의사항 (반드시 확인하세요!)
+# ────────────────────────────────────────────────────────────────────────────
+# 1. 이 파일은 예시입니다. 기존 배포 워크플로우에 아래 내용을 추가하세요.
+#
+# 2. 필수 Secrets 설정 (Repository Settings > Secrets and variables > Actions):
+#    - SLACK_BOT_TOKEN: Slack Bot의 OAuth Token (xoxb-로 시작)
+#    - SLACK_CHANNEL_ID: 알림을 받을 Slack 채널 ID (C로 시작하는 11자리)
+#
+# 4. 워크플로우 경로: 아래 두 가지 방식 중 선택
+#    - 중앙 레포 사용: demodev-lab/.github/.github/workflows/notify-slack-deploy.yml@main
+#    - 로컬 사용: ./.github/workflows/notify-slack-deploy.yml (파일 복사 필요)
+#
+# 5. 'needs' 값을 실제 배포 job 이름으로 변경하세요.
+#    예: needs: deploy, needs: build-and-deploy, needs: production-deploy
+#
+# 6. if 조건 설명:
+#    - success(): 이전 job이 성공했을 때만 실행
+#    - failure(): 이전 job이 실패했을 때만 실행
+#    - always(): 성공/실패 관계없이 항상 실행 (권장하지 않음)
+#
+# ============================================================================
+
+# 아래는 기존 배포 워크플로우에 추가할 내용입니다.
+# ----------------------------------------------------------------------------
+
+name: Deploy to Production
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Deploy Application
+        run: |
+          # 실제 배포 스크립트를 여기에 작성하세요
+          echo "Deploying..."
+
+# ============================================================================
+#          ⬇️ 여기서부터 기존 워크플로우에 추가하세요 ⬇️
+# ============================================================================
+
+  # 배포 성공 시 알림
+  notify-success:
+    needs: deploy  # ⚠️ 실제 배포 job 이름으로 변경하세요
+    if: success()
+    uses: demodev-lab/.github/.github/workflows/notify-slack-deploy.yml@main
+    with:
+      status: 'success'
+    secrets:
+      SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+      SLACK_CHANNEL_ID: ${{ secrets.SLACK_CHANNEL_ID }}
+
+  # 배포 실패 시 알림
+  notify-failure:
+    needs: deploy  # ⚠️ 실제 배포 job 이름으로 변경하세요
+    if: failure()
+    uses: demodev-lab/.github/.github/workflows/notify-slack-deploy.yml@main
+    with:
+      status: 'failure'
+    secrets:
+      SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+      SLACK_CHANNEL_ID: ${{ secrets.SLACK_CHANNEL_ID }}

@@ -1,7 +1,12 @@
-name: Merge Notification
+name: Slack Deploy Notification
 
 on:
   workflow_call:
+    inputs:
+      status:
+        required: true
+        type: string
+        description: 'success or failure'
     secrets:
       SLACK_BOT_TOKEN:
         required: true
@@ -9,12 +14,11 @@ on:
         required: true
 
 jobs:
-  notify-merge:
-    runs-on: self-hosted
-
-    steps:   
+  notify:
+    runs-on: ubuntu-latest
+    steps:
       - name: Send Slack Notification - Success
-        if: success()
+        if: inputs.status == 'success'
         continue-on-error: true
         uses: slackapi/slack-github-action@v2.1.1
         with:
@@ -42,7 +46,7 @@ jobs:
                     },
                     {
                       "type": "mrkdwn",
-                      "text": "*커밋:*\n${{ github.sha }}"
+                      "text": "*커밋:*\n${{ github.event.head_commit.message }}"
                     },
                     {
                       "type": "mrkdwn",
@@ -58,7 +62,7 @@ jobs:
             }
 
       - name: Send Slack Notification - Failure
-        if: failure()
+        if: inputs.status == 'failure'
         continue-on-error: true
         uses: slackapi/slack-github-action@v2.1.1
         with:
@@ -86,7 +90,7 @@ jobs:
                     },
                     {
                       "type": "mrkdwn",
-                      "text": "*커밋:*\n${{ github.sha }}"
+                      "text": "*커밋:*\n${{ github.event.head_commit.message }}"
                     },
                     {
                       "type": "mrkdwn",
