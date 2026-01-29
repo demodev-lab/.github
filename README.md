@@ -87,7 +87,7 @@ Repository Settings > Secrets and variables > Actions에서 다음 값을 설정
 - PR 제목
 - 브랜치 (source → target)
 - 작성자
-- PR 링크
+- PR 보기
 
 ### 사용 방법
 
@@ -98,10 +98,11 @@ name: PR Notification
 
 on:
   pull_request:
-    types: [opened]
+    types: [opened, reopened, ready_for_review]
 
 jobs:
   notify:
+    if: github.event.pull_request.draft == false
     uses: demodev-lab/.github/.github/workflows/notify-slack-pr-open.yml@main
     secrets:
       SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
@@ -110,11 +111,13 @@ jobs:
 
 ### 트리거 옵션
 
-```yaml
-types: [opened]              # PR 생성 시만
-types: [opened, reopened]    # PR 생성 + 재오픈 시
-types: [opened, ready_for_review]  # PR 생성 + Draft→Ready 시
-```
+| 타입 | 설명 |
+|------|------|
+| `opened` | PR 생성 시 |
+| `reopened` | PR 재오픈 시 |
+| `ready_for_review` | Draft → Ready 변경 시 |
+
+> ⚠️ `if: github.event.pull_request.draft == false` 조건으로 Draft PR은 알림이 가지 않습니다.
 
 > 📄 자세한 내용은 [.github/example/notify-slack-pr-open.yml](.github/example/notify-slack-pr-open.yml) 참고
 
@@ -129,7 +132,7 @@ PR이 머지되면 Slack으로 알림을 보냅니다.
 - PR 작성자
 - 브랜치 (source → target)
 - 머지한 사람
-- PR 링크
+- PR 보기
 
 ### 사용 방법
 
