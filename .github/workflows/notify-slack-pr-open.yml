@@ -21,13 +21,13 @@ jobs:
           payload: |
             {
               "channel": "${{ secrets.SLACK_CHANNEL_ID }}",
-              "text": "새로운 PR이 배달되었습니다!",
+              "text": "새로운 PR이 생성되었습니다. 리뷰가 필요해요!",
               "blocks": [
                 {
                   "type": "header",
                   "text": {
                     "type": "plain_text",
-                    "text": "🎁 띵동! 선물이 배달되었어요",
+                    "text": "👀 PR이 생성되었어요. 리뷰가 필요해요",
                     "emoji": true
                   }
                 },
