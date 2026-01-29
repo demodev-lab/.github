@@ -42,9 +42,12 @@ Repository Settings > Secrets and variables > Actions에서 다음 값을 설정
 
 배포 성공/실패 시 Slack으로 알림을 보냅니다.
 
-### 특징
-- 배포 성공 시: 🚀 이모지와 함께 성공 메시지
-- 배포 실패 시: ❌ 이모지와 함께 실패 메시지 + 로그 링크
+### 표시 정보
+- 레포지토리명
+- 커밋 (SHA 7자리)
+- 브랜치
+- 실행자
+- 로그 링크 (실패 시)
 
 ### 사용 방법
 
@@ -84,10 +87,10 @@ Repository Settings > Secrets and variables > Actions에서 다음 값을 설정
 
 ### 표시 정보
 - 레포지토리명
-- PR 제목
+- 번호
 - 브랜치 (source → target)
 - 작성자
-- PR 보기
+- PR 보기 (제목)
 
 ### 사용 방법
 
@@ -129,10 +132,10 @@ PR이 머지되면 Slack으로 알림을 보냅니다.
 
 ### 표시 정보
 - 레포지토리명
-- PR 작성자
+- 작성자
 - 브랜치 (source → target)
 - 머지한 사람
-- PR 보기
+- PR 보기 (제목)
 
 ### 사용 방법
 
