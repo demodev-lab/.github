@@ -27,10 +27,11 @@ name: PR Notification
 
 on:
   pull_request:
-    types: [opened]
+    types: [opened, reopened, ready_for_review]
 
 jobs:
   notify:
+    if: github.event.pull_request.draft == false
     uses: demodev-lab/.github/.github/workflows/notify-slack-pr-open.yml@main
     secrets:
       SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
