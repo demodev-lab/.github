@@ -17,6 +17,9 @@ jobs:
   demodev-lab:
     runs-on: self-hosted
     steps:
+      - name: Set short SHA
+        run: echo "SHORT_SHA=${GITHUB_SHA::7}" >> $GITHUB_ENV
+
       - name: Send Slack Notification - Success
         if: inputs.status == 'success'
         continue-on-error: true
@@ -46,7 +49,7 @@ jobs:
                     },
                     {
                       "type": "mrkdwn",
-                      "text": "*커밋:*\n`${{ github.sha }}`"
+                      "text": "*커밋:*\n`${{ env.SHORT_SHA }}`"
                     },
                     {
                       "type": "mrkdwn",
@@ -90,7 +93,7 @@ jobs:
                     },
                     {
                       "type": "mrkdwn",
-                      "text": "*커밋:*\n`${{ github.sha }}`"
+                      "text": "*커밋:*\n`${{ env.SHORT_SHA }}`"
                     },
                     {
                       "type": "mrkdwn",
