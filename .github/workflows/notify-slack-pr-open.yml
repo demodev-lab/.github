@@ -21,10 +21,10 @@ jobs:
           payload: |
             {
               "channel": "${{ secrets.SLACK_CHANNEL_ID }}",
-              "text": "새로운 PR이 생성되었습니다. 리뷰가 필요해요!",
               "attachments": [
                 {
                   "color": "#2196F3",
+                  "fallback": "[${{ github.repository }}] PR이 생성되었어요. 리뷰가 필요해요",
                   "blocks": [
                     {
                       "type": "header",
