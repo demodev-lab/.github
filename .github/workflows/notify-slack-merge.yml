@@ -25,7 +25,7 @@ jobs:
               "attachments": [
                 {
                   "color": "#4CAF50",
-                  "fallback": "[${{ github.repository }}] PR이 머지되었습니다!",
+                  "fallback": "[${{ github.event.repository.name }}] PR이 머지되었습니다!",
                   "blocks": [
                     {
                       "type": "header",

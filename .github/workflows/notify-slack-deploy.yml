@@ -33,7 +33,7 @@ jobs:
               "attachments": [
                 {
                   "color": "#9C27B0",
-                  "fallback": "[${{ github.repository }}] 배포 성공",
+                  "fallback": "[${{ github.event.repository.name }}] 배포 성공",
                   "blocks": [
                     {
                       "type": "header",
@@ -82,7 +82,7 @@ jobs:
               "attachments": [
                 {
                   "color": "#F44336",
-                  "fallback": "[${{ github.repository }}] 배포 실패",
+                  "fallback": "[${{ github.event.repository.name }}] 배포 실패",
                   "blocks": [
                     {
                       "type": "header",
