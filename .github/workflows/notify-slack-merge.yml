@@ -55,6 +55,13 @@ jobs:
                           "text": "*머지한 사람:*\n${{ github.actor }}"
                         }
                       ]
+                    },
+                    {
+                      "type": "section",
+                      "text": {
+                        "type": "mrkdwn",
+                        "text": "*PR 보기:* <${{ github.event.pull_request.html_url }}|${{ github.event.pull_request.title }}>"
+                      }
                     }
                   ]
                 }
