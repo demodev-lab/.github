@@ -31,33 +31,38 @@ jobs:
             {
               "channel": "${{ secrets.SLACK_CHANNEL_ID }}",
               "text": "배포가 성공했습니다!",
-              "blocks": [
+              "attachments": [
                 {
-                  "type": "header",
-                  "text": {
-                    "type": "plain_text",
-                    "text": "🚀 배포 성공",
-                    "emoji": true
-                  }
-                },
-                {
-                  "type": "section",
-                  "fields": [
+                  "color": "#9C27B0",
+                  "blocks": [
                     {
-                      "type": "mrkdwn",
-                      "text": "*레포지토리:*\n`${{ github.repository }}`"
+                      "type": "header",
+                      "text": {
+                        "type": "plain_text",
+                        "text": "🚀 배포 성공",
+                        "emoji": true
+                      }
                     },
                     {
-                      "type": "mrkdwn",
-                      "text": "*커밋:*\n`${{ env.SHORT_SHA }}`"
-                    },
-                    {
-                      "type": "mrkdwn",
-                      "text": "*브랜치:*\n`${{ github.ref_name }}`"
-                    },
-                    {
-                      "type": "mrkdwn",
-                      "text": "*실행자:*\n${{ github.actor }}"
+                      "type": "section",
+                      "fields": [
+                        {
+                          "type": "mrkdwn",
+                          "text": "*레포지토리:*\n`${{ github.repository }}`"
+                        },
+                        {
+                          "type": "mrkdwn",
+                          "text": "*커밋:*\n`${{ env.SHORT_SHA }}`"
+                        },
+                        {
+                          "type": "mrkdwn",
+                          "text": "*브랜치:*\n`${{ github.ref_name }}`"
+                        },
+                        {
+                          "type": "mrkdwn",
+                          "text": "*실행자:*\n${{ github.actor }}"
+                        }
+                      ]
                     }
                   ]
                 }
@@ -75,42 +80,47 @@ jobs:
             {
               "channel": "${{ secrets.SLACK_CHANNEL_ID }}",
               "text": "배포가 실패했습니다!",
-              "blocks": [
+              "attachments": [
                 {
-                  "type": "header",
-                  "text": {
-                    "type": "plain_text",
-                    "text": "❌ 배포 실패",
-                    "emoji": true
-                  }
-                },
-                {
-                  "type": "section",
-                  "fields": [
+                  "color": "#F44336",
+                  "blocks": [
                     {
-                      "type": "mrkdwn",
-                      "text": "*레포지토리:*\n`${{ github.repository }}`"
+                      "type": "header",
+                      "text": {
+                        "type": "plain_text",
+                        "text": "❌ 배포 실패",
+                        "emoji": true
+                      }
                     },
                     {
-                      "type": "mrkdwn",
-                      "text": "*커밋:*\n`${{ env.SHORT_SHA }}`"
+                      "type": "section",
+                      "fields": [
+                        {
+                          "type": "mrkdwn",
+                          "text": "*레포지토리:*\n`${{ github.repository }}`"
+                        },
+                        {
+                          "type": "mrkdwn",
+                          "text": "*커밋:*\n`${{ env.SHORT_SHA }}`"
+                        },
+                        {
+                          "type": "mrkdwn",
+                          "text": "*브랜치:*\n`${{ github.ref_name }}`"
+                        },
+                        {
+                          "type": "mrkdwn",
+                          "text": "*실행자:*\n${{ github.actor }}"
+                        }
+                      ]
                     },
                     {
-                      "type": "mrkdwn",
-                      "text": "*브랜치:*\n`${{ github.ref_name }}`"
-                    },
-                    {
-                      "type": "mrkdwn",
-                      "text": "*실행자:*\n${{ github.actor }}"
+                      "type": "section",
+                      "text": {
+                        "type": "mrkdwn",
+                        "text": "*로그:* <${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|워크플로우 보기>"
+                      }
                     }
                   ]
-                },
-                {
-                  "type": "section",
-                  "text": {
-                    "type": "mrkdwn",
-                    "text": "*로그:* <${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|워크플로우 보기>"
-                  }
                 }
               ]
             }

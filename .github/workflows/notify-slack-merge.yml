@@ -23,33 +23,38 @@ jobs:
             {
               "channel": "${{ secrets.SLACK_CHANNEL_ID }}",
               "text": "PR이 머지되었습니다!",
-              "blocks": [
+              "attachments": [
                 {
-                  "type": "header",
-                  "text": {
-                    "type": "plain_text",
-                    "text": "✅ PR이 머지되었습니다!",
-                    "emoji": true
-                  }
-                },
-                {
-                  "type": "section",
-                  "fields": [
+                  "color": "#4CAF50",
+                  "blocks": [
                     {
-                      "type": "mrkdwn",
-                      "text": "*레포지토리:*\n`${{ github.repository }}`"
+                      "type": "header",
+                      "text": {
+                        "type": "plain_text",
+                        "text": "✅ PR이 머지되었습니다!",
+                        "emoji": true
+                      }
                     },
                     {
-                      "type": "mrkdwn",
-                      "text": "*작성자:*\n${{ github.event.pull_request.user.login }}"
-                    },
-                    {
-                      "type": "mrkdwn",
-                      "text": "*브랜치:*\n`${{ github.event.pull_request.head.ref }}` → `${{ github.event.pull_request.base.ref }}`"
-                    },
-                    {
-                      "type": "mrkdwn",
-                      "text": "*머지한 사람:*\n${{ github.actor }}"
+                      "type": "section",
+                      "fields": [
+                        {
+                          "type": "mrkdwn",
+                          "text": "*레포지토리:*\n`${{ github.repository }}`"
+                        },
+                        {
+                          "type": "mrkdwn",
+                          "text": "*작성자:*\n${{ github.event.pull_request.user.login }}"
+                        },
+                        {
+                          "type": "mrkdwn",
+                          "text": "*브랜치:*\n`${{ github.event.pull_request.head.ref }}` → `${{ github.event.pull_request.base.ref }}`"
+                        },
+                        {
+                          "type": "mrkdwn",
+                          "text": "*머지한 사람:*\n${{ github.actor }}"
+                        }
+                      ]
                     }
                   ]
                 }
