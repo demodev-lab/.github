@@ -1,0 +1,21 @@
+name: Weekly PR Report
+
+on:
+  schedule:
+    - cron: '0 7 * * 5' # UTC 07:00 = KST 16:00, 매주 금요일
+  workflow_dispatch: # 수동 실행 (테스트용)
+
+jobs:
+  weekly-report:
+    runs-on: self-hosted
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Run Weekly PR Report
+        env:
+          GH_TOKEN: ${{ secrets.ORG_GITHUB_TOKEN }}
+          ORG_NAME: ${{ vars.ORG_NAME }}
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+          SLACK_CHANNEL_ID: ${{ secrets.SLACK_CHANNEL_ID }}
+        run: python3 .github/scripts/weekly-pr-report.py
